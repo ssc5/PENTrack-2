@@ -35,7 +35,7 @@ fi
 
 printf "#!/bin/bash\n\
 #PBS -S /bin/bash\n\
-#PBS -l mem=1gb  \n\
+#PBS -l pmem=1gb  \n\
 #PBS -l procs=1\n\
 #PBS -l walltime=1:30:00\n\
 #PBS -t 1-10 \n\
@@ -206,7 +206,9 @@ if [[ $wallTime != "" ]]; then
 		#need to add a zero when minutes < 10
 		if [[ "$fMinutes" -gt "10" ]]; then 
 			cat $pbsfileName | sed "s/#PBS -l walltime=1:30:00/#PBS -l walltime=$fHours:$fMinutes:00/" > toto
+			echo Finished setting walltime to $fHours:$fMinutes:00.
 		else
+			echo Finished setting walltime to $fHours:0$fMinutes:00. 
 			cat $pbsfileName | sed "s/#PBS -l walltime=1:30:00/#PBS -l walltime=$fHours:0$fMinutes:00/" > toto
 		fi
 		
@@ -253,7 +255,7 @@ fi
 files=$(ls $outDirName/*.out | grep -v "BFCut" 2> /dev/null | wc -l)
 
 if [  "$files" != 0 ]; then 
-	outLogNums=`ls $outDirName/*.out | sed "s|$outDirName/||g" | sed 's/0//g' | sed 's/.out//g' | sed 's/proton//g' | sed 's/neutron//g' | sed 's/electron//g' | sed 's/out\///g' \
+	outLogNums=`ls $outDirName/*.out | sed "s|$outDirName/||g" | sed 's/^0*//g' | sed 's/.out//g' | sed 's/proton//g' | sed 's/neutron//g' | sed 's/electron//g' | sed 's/out\///g' \
 		| sed 's/end//g' | sed 's/snapshot//g' | sed 's/hit//g' | sed 's/track//g' | sed 's/spin//g'`
 fi 
 
