@@ -234,7 +234,7 @@ totJobNum=$(($jobsRequested+jobsRunning))
 if [[ $totJobNum -ge 2880 ]]; then 
 	printf "\nWARNING!!! You will have $totJobNum jobs in queue if you submit this job. This is more than the 2880 jobs allowed on the Jasper cluster.\n\n"
 else
-	printf "\nJasper job quota NOT exceeded.\n\n"
+	printf "\nJasper job quota will NOT be exceeded if you submit the job.\n\n"
 fi  
 
 ##################################################################
